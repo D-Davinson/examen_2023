@@ -1,10 +1,11 @@
-from pydantic import BaseModel
 from Musique_class import Musique
 
-class Magasin(BaseModel):
-    type_magasin: str
-    vynille_musique: list[Musique]
-    dvd_musique: list[Musique]
+class Magasin:
+
+    def __init__(self,type_magasin):
+        self.type_magasin = type_magasin
+        self.vynille_musique = []
+        self.dvd_musique = []
 
     def ajouter_vynille_musique(self, musique : Musique):
         if self.type_magasin == musique.type_musique:
@@ -18,4 +19,4 @@ class Magasin(BaseModel):
     def remove_dvd_musique(self, musique : Musique):
         self.dvd_musique.remove(musique)
 
-        
+
