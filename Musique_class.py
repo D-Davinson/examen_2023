@@ -15,19 +15,19 @@ class Musique(BaseModel):
         return type
 
     @field_validator('immatriculation')
-    def check_immatriculation(cls, immatric, value):
-        if len(immatric)!= 15:
-            raise ValueError("Err -> immatricule doit être de 15 characters")
-        if immatric[0].upper() != value["nom_artiste"][0].upper() or immatric[1].upper() != value["nom_artiste"][1].upper():
-            raise ValueError("Err -> immatricule doit  commencer par les deux premier initial de l'artise")
-        if int(immatric[3,4,5]) < 60 or int(immatric[3,4,5]) > 300:
-            raise ValueError("Err -> immatricule doit avoir une durée entre 1min et 5min")
-        if immatric[7,8,9] not in ['RAP','POP','RNB']:
-            raise ValueError("Err -> immatricule doit être RAP,POR ou RNB")
-        if '6' in immatric[10,11,12,13,14]:
-            raise ValueError("Err -> immatricule doit pas contenir le chiffre 6")
-        if immatric[2] != '/' or immatric[6] != '/' or immatric[10] != '/':
-            raise ValueError("Err -> immatricule à une mauvaise forme :(")
-        return immatric
+    def check_immatriculation(cls, v,values):
+        if len(v)!= 15:
+            raise ValueError("L'immatriculation doit être de 15 chiffres")
+        if v[0].upper() != values['nom_artiste'][0].upper() or v[1].upper() != values['nom_artiste'][1].upper():
+            raise ValueError("Le type de musique doit commencer par la première lettre du nom et du prénom")
+        if v[2] != "/"  or v[6] != "/"  or v[10] != "/" :
+            raise ValueError("Le type de musique doit être de la forme XX/XXX/XXX/XXXX")
+        if int(v[3:6]) < 60 or int(v[3:6]) >300:
+            raise ValueError("La duration doit être comprise entre 1 et 5")
+        if v[7:10] not in ['RNB', 'RAP', 'POP']:
+            raise ValueError("Le type de musique doit être RAP, POP ou RNB")    
+        if '6' in v[11:15]:
+            raise ValueError("Le dernier bloc ne doit pas contenir le chiffre 6")     
+        return v
 
 
